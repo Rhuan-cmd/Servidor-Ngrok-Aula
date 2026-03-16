@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Enviar Mensagem</title>
+</head>
+<body>
+
+<h2>Enviar mensagem</h2>
+
+<form id="formMensagem">
+  <input type="text" id="mensagem" placeholder="Digite sua mensagem" required>
+  <button type="submit">Enviar</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+document.getElementById("formMensagem").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const mensagem = document.getElementById("mensagem").value;
+
+  try {
+    const resposta = await fetch("https://skookum-paulina-unpreponderated.ngrok-free.dev/enviar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true"
+      },
+      body: JSON.stringify({
+        msg: mensagem
+      })
+    });
+
+    const texto = await resposta.text();
+    document.getElementById("status").innerText = "Resposta: " + texto;
+
+  } catch (erro) {
+    document.getElementById("status").innerText = "Erro ao enviar.";
+    console.error(erro);
+  }
+});
+</script>
+
+</body>
+</html>

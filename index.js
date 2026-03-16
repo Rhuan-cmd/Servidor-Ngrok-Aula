@@ -2,8 +2,13 @@ const conteiner = document.getElementById("conteiner");
 
 async function atualizarInterface() {
     try {
-        const resposta = await fetch('http://localhost:3000/mensagens');
+        const resposta = await fetch('https://skookum-paulina-unpreponderated.ngrok-free.dev/mensagens', {
+            headers: {
+                "ngrok-skip-browser-warning": "true"
+            }
+        });
         const mensagens = await resposta.json();
+        console.log(mensagens)
         
         for (let i = conteiner.childElementCount; i < mensagens.length; i++){
             const h1 = document.createElement('h1');
